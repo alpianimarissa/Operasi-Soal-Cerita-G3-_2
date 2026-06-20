@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Detektif Matematika - 30 Misi Soal Cerita</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- KaTeX for clean mathematical notation -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Fredoka', 'Poppins', sans-serif;
+        }
+        .comic-shadow {
+            box-shadow: 4px 4px 0px 0px #1e293b;
+        }
+        .comic-shadow-sm {
+            box-shadow: 3px 3px 0px 0px #1e293b;
+        }
+        .comic-shadow-emerald {
+            box-shadow: 3px 3px 0px 0px #065f46;
+        }
+        .comic-shadow-rose {
+            box-shadow: 3px 3px 0px 0px #9f1239;
+        }
+        .comic-btn-active:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px 0px #1e293b;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#fef3c7] via-[#e0f2fe] to-[#dcfce7] text-slate-800 min-h-screen flex flex-col justify-between overflow-x-hidden overflow-y-auto select-none">
+
+    <!-- Sound Synthesizer Engine (Web Audio API) -->
+    <script>
+        const SoundFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            },
+            playClick() {
+                this.init();
+                let osc = this.ctx.createOscillator();
+                let gain = this.ctx.createGain();
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.frequency.setValueAtTime(450, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(900, this.ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.1);
+            },
+            playSuccess() {
+                this.init();
+                let now = this.ctx.currentTime;
+                let notes = [523.25, 659.25, 783.99, 1046.50]; // C5 - E5 - G5 - C6
+                notes.forEach((freq, idx) => {
+                    let osc = this.ctx.createOscillator();
+                    let gain = this.ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+                    gain.gain.setValueAtTime(0.1, now + idx * 0.06);
+                    gain.gain.linearRampToValueAtTime(0.01, now + idx * 0.06 + 0.12);
+                    osc.start(now + idx * 0.06);
+                    osc.stop(now + idx * 0.06 + 0.15);
+                });
+            },
+            playWrong() {
+                this.init();
+                let osc = this.ctx.createOscillator();
+                let gain = this.ctx.createGain();
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(160, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(80, this.ctx.currentTime + 0.3);
+                gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.3);
+            },
+            playFanfare() {
+                this.init();
+                let now = this.ctx.currentTime;
+                let arpeggio = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50];
+                arpeggio.forEach((freq, idx) => {
+                    let osc = this.ctx.createOscillator();
+                    let gain = this.ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                    gain.gain.setValueAtTime(0.08, now + idx * 0.08);
+                    gain.gain.linearRampToValueAtTime(0.01, now + idx * 0.08 + 0.4);
+                    osc.start(now + idx * 0.08);
+                    osc.stop(now + idx * 0.08 + 0.5);
+                });
+            }
+        };
+    </script>
+
+    <!-- Header Section (HUD) -->
+    <header class="bg-white border-b-4 border-amber-400 px-4 py-2 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-4xl mx-auto flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🕵️‍♂️</span>
+                <div>
+                    <h1 class="font-black text-base md:text-lg text-indigo-950 leading-none">UJIAN AGEN DETEKTIF</h1>
+                    <span class="text-[10px] text-amber-600 font-extrabold uppercase">Tantangan Berjenjang</span>
+                </div>
+            </div>
+
+            <!-- Stats Badge -->
+            <div class="flex items-center gap-3 bg-amber-100 px-3 py-1.5 rounded-xl border-2 border-slate-900 comic-shadow-sm">
+                <div class="flex items-center gap-1.5">
+                    <span id="player-avatar" class="w-6 h-6 rounded-full bg-sky-200 flex items-center justify-center border border-slate-900 text-sm">👦</span>
+                    <span id="player-display-name" class="text-xs font-black text-indigo-950">Agen</span>
+                </div>
+                <div class="h-4 w-[1px] bg-slate-900"></div>
+                <div class="flex items-center gap-0.5 text-orange-600 font-extrabold text-xs">
+                    <i class="fa-solid fa-star"></i>
+                    <span id="score-text">0 XP</span>
+                </div>
+                <div class="h-4 w-[1px] bg-slate-900"></div>
+                <div class="text-[10px] text-emerald-600 font-black bg-white px-2 py-0.5 rounded border border-slate-950">
+                    <span id="correct-count">0</span> Benar
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-2xl w-full mx-auto p-3 flex flex-col justify-center gap-4">
+
+        <!-- Welcome Setup Screen (Page 0) -->
+        <div id="setup-screen" class="w-full bg-white border-4 border-slate-900 rounded-3xl p-5 comic-shadow space-y-4 animate-fade-in">
+            <div class="text-center space-y-2">
+                <span class="text-white font-black uppercase tracking-widest text-[10px] bg-rose-500 px-3 py-1 rounded-full border-2 border-slate-900">Misi Agung Baru</span>
+                <h2 class="text-2xl md:text-3xl font-black text-indigo-950">Ujian Detektif Rahasia!</h2>
+                <p class="text-slate-600 text-xs md:text-sm font-bold max-w-md mx-auto">
+                    Kalahkan 30 teka-teki misteri baru! <span class="text-indigo-600">20 Soal Pertama</span> adalah kasus tunggal, dan <span class="text-rose-500">10 Soal Terakhir</span> adalah kasus campuran!
+                </p>
+            </div>
+
+            <div class="max-w-sm mx-auto bg-amber-50 p-4 rounded-xl border-2 border-slate-900 comic-shadow-sm space-y-3">
+                <div>
+                    <label class="block text-[10px] text-indigo-950 font-black uppercase tracking-wider mb-1">Nama Sandi Agen:</label>
+                    <input type="text" id="name-input" placeholder="Contoh: Agen Rizky" class="w-full px-3 py-2 rounded-lg bg-white border-2 border-slate-900 text-sm font-bold text-center text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-300">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] text-indigo-950 font-black uppercase tracking-wider mb-1 text-center">Pilih Karakter Detektif:</label>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button onclick="selectAvatar('👦', this)" class="avatar-btn p-2 bg-amber-300 border-2 border-slate-900 rounded-lg text-2xl hover:bg-amber-200 comic-btn-active transition-all">👦</button>
+                        <button onclick="selectAvatar('👧', this)" class="avatar-btn p-2 bg-white border-2 border-slate-900 rounded-lg text-2xl hover:bg-amber-200 comic-btn-active transition-all">👧</button>
+                        <button onclick="selectAvatar('🦊', this)" class="avatar-btn p-2 bg-white border-2 border-slate-900 rounded-lg text-2xl hover:bg-amber-200 comic-btn-active transition-all">🦊</button>
+                        <button onclick="selectAvatar('🦁', this)" class="avatar-btn p-2 bg-white border-2 border-slate-900 rounded-lg text-2xl hover:bg-amber-200 comic-btn-active transition-all">🦁</button>
+                    </div>
+                </div>
+
+                <button onclick="startQuiz()" class="w-full py-3 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white font-black text-sm border-2 border-slate-900 rounded-xl comic-shadow-sm comic-btn-active transition-all uppercase tracking-wide">
+                    Mulai Ujian Detektif <i class="fa-solid fa-play ml-1"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Interactive Quiz Container (Hidden initially) -->
+        <div id="quiz-container" class="hidden w-full space-y-4">
+            
+            <!-- Progress Line Indicator -->
+            <div class="bg-white border-2 border-slate-900 rounded-xl p-2 flex justify-between items-center text-xs font-bold text-slate-700">
+                <span>Progres Kasus:</span>
+                <div class="w-3/5 bg-slate-100 border border-slate-900 h-3 rounded-full overflow-hidden">
+                    <div id="quiz-progress-bar" class="bg-emerald-500 h-full transition-all duration-300" style="width: 3.33%"></div>
+                </div>
+                <span class="text-indigo-950 font-black"><span id="hud-slide-num">1</span> / 30</span>
+            </div>
+
+            <!-- Active Question Card -->
+            <div class="bg-white border-4 border-slate-900 rounded-2xl p-4 md:p-5 comic-shadow relative flex flex-col gap-3">
+                
+                <!-- Card Header -->
+                <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                    <span class="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 bg-indigo-100 text-indigo-800 rounded border border-slate-400">
+                        Kasus Misteri <span id="current-question-num">1</span>
+                    </span>
+                    <span id="operation-badge" class="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 bg-slate-100 text-slate-800 rounded border border-slate-400">
+                        Misi Rahasia
+                    </span>
+                </div>
+
+                <!-- Case Text -->
+                <div class="bg-slate-50 p-3.5 rounded-xl border-2 border-slate-900 relative">
+                    <span class="absolute -top-2.5 -left-1.5 bg-rose-500 text-white font-black text-[8px] px-1.5 py-0.5 rounded border border-slate-900">Petunjuk Kata</span>
+                    <p id="question-text" class="text-slate-800 font-bold text-xs sm:text-sm leading-relaxed">
+                        Loading case text...
+                    </p>
+                </div>
+
+                <!-- Actions Center -->
+                <div class="flex items-center justify-between">
+                    <button id="hint-toggle-btn" onclick="toggleHint()" class="px-3 py-1.5 bg-amber-300 hover:bg-amber-400 text-slate-900 text-[10px] font-black rounded-lg border border-slate-900 comic-shadow-sm comic-btn-active transition-all flex items-center gap-1">
+                        <i class="fa-solid fa-magnifying-glass"></i> Kaca Pembesar (Petunjuk)
+                    </button>
+                    <span class="text-[9px] text-slate-400 font-bold italic">Pilih satu jawaban di bawah:</span>
+                </div>
+
+                <!-- Detective Glass Hints Segment (Reinforces Diketahui & Ditanyakan) -->
+                <div id="hint-box" class="hidden bg-emerald-50 border border-emerald-500 rounded-xl p-3 space-y-1.5 animate-fade-in">
+                    <div class="grid sm:grid-cols-2 gap-2 text-[10px]">
+                        <div class="bg-white p-2 rounded-lg border border-emerald-300">
+                            <span class="font-extrabold text-emerald-700 block">🔍 DIKETAHUI:</span>
+                            <span id="hint-known" class="text-slate-700 font-bold">Mengambil data angka...</span>
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-emerald-300">
+                            <span class="font-extrabold text-rose-600 block">💼 DITANYAKAN:</span>
+                            <span id="hint-asked" class="text-slate-700 font-bold">Misteri akhir...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Answer Choices Grid -->
+                <div class="grid sm:grid-cols-2 gap-2" id="choices-grid">
+                    <!-- Dynamic choice buttons -->
+                </div>
+
+                <!-- Review / Explanation Section (Appears after answering) -->
+                <div id="explanation-section" class="hidden bg-[#f0fdf4] border-2 border-emerald-800 rounded-xl p-3 space-y-2 animate-fade-in">
+                    <div class="flex items-center gap-2">
+                        <span id="result-emoji" class="text-2xl">🎯</span>
+                        <div>
+                            <h4 id="result-title" class="font-black text-emerald-800 text-xs">Jawaban Benar!</h4>
+                            <p class="text-[9px] text-slate-500 font-bold">Bedah Kasus Detektif:</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2 space-y-1 text-[11px] max-h-40 overflow-y-auto">
+                        <p class="font-bold text-slate-700"><strong class="text-emerald-700">🔍 Diketahui:</strong> <span id="explain-known">Info</span></p>
+                        <p class="font-bold text-slate-700"><strong class="text-rose-600">💼 Ditanyakan:</strong> <span id="explain-asked">Misteri</span></p>
+                        <div class="p-2 bg-white rounded-lg border border-emerald-700 my-1">
+                            <span class="font-black text-indigo-950 block text-[10px]">🧮 Solusi Hitungan:</span>
+                            <div class="flex items-center gap-2 font-black text-indigo-900 text-xs sm:text-sm">
+                                <span id="math-expression" class="math-font">Formula</span>
+                                <span class="text-[9px] text-slate-500 font-bold" id="math-word-explain">(Penjelasan)</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 italic font-bold text-[10px]" id="explain-rationale">Rationale explanation...</p>
+                    </div>
+                </div>
+
+                <!-- Footer Navigation inside Quiz Card -->
+                <div class="flex justify-between items-center pt-2 border-t border-slate-100">
+                    <button id="btn-back" onclick="prevQuestion()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-black rounded-lg border border-slate-400 flex items-center gap-1 transition-all">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali
+                    </button>
+                    <button id="btn-next" onclick="nextQuestion()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-lg border border-slate-900 flex items-center gap-1 transition-all comic-shadow-sm">
+                        Lanjut <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Celebration Graduation Ceremony (Hidden initially) -->
+        <div id="graduation-screen" class="hidden w-full text-center space-y-4 animate-fade-in">
+            <div class="max-w-sm mx-auto bg-white border-4 border-slate-900 rounded-3xl p-5 comic-shadow relative overflow-hidden space-y-4">
+                <div class="absolute -top-10 -left-10 w-20 h-24 bg-yellow-300/20 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -right-10 w-20 h-24 bg-emerald-300/20 rounded-full blur-2xl"></div>
+
+                <div class="flex justify-center">
+                    <span class="text-6xl animate-bounce">🏆</span>
+                </div>
+
+                <div class="space-y-1">
+                    <span class="text-indigo-950 font-black uppercase tracking-widest text-[9px] bg-amber-300 px-3 py-1 rounded-full border-2 border-slate-900">Sertifikat Kelulusan</span>
+                    <h3 class="text-xl md:text-2xl font-black text-indigo-950 pt-1">MASTER DETEKTIF!</h3>
+                </div>
+
+                <div class="p-4 bg-amber-50 rounded-xl border-2 border-slate-900 space-y-2">
+                    <p class="text-[10px] text-slate-500 font-bold">Diberikan secara terhormat kepada:</p>
+                    <p id="cert-player-name" class="text-lg font-black text-indigo-900 underline tracking-wide">Nama Detektif</p>
+                    <p class="text-[10px] font-bold text-slate-600">Berhasil memecahkan 30 Kasus Soal Cerita Operasi Bilangan!</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-xs font-black">
+                    <div class="bg-emerald-100 p-2 rounded-lg border border-slate-900">
+                        <span class="text-emerald-800 block text-[10px]">BENAR</span>
+                        <span id="final-correct" class="text-lg text-slate-900">30 / 30</span>
+                    </div>
+                    <div class="bg-amber-100 p-2 rounded-lg border border-slate-900">
+                        <span class="text-amber-800 block text-[10px]">TOTAL SKOR</span>
+                        <span id="final-score" class="text-lg text-slate-900">3000 XP</span>
+                    </div>
+                </div>
+
+                <button onclick="restartQuiz()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-lg border border-slate-900 comic-shadow-sm comic-btn-active transition-all uppercase text-xs tracking-wide">
+                    Ulangi Ujian <i class="fa-solid fa-rotate-left ml-1"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer of the Page -->
+    <footer class="bg-white border-t border-slate-200 py-1.5 text-center text-[10px] text-slate-400 font-bold">
+        Kurikulum Merdeka • Kelas 3 SD • Tata Letak Responsif Bebas Scroll
+    </footer>
+
+    <!-- INTERACTIVE QUIZ DATA & CONTROLLER LOGIC -->
+    <script>
+        // 30 Soal Cerita Matematika yang Baru: 20 Soal Tunggal (1-20), 10 Soal Campuran (21-30)
+        const QuizData = [
+            // ================= 20 SOAL BIASA (OPERASI TUNGGAL) =================
+            {
+                operation: "Penjumlahan",
+                question: "Agen Dina menemukan 62 berkas rahasia di dalam lemari kayu tua. Tak lama kemudian, rekannya memberikan 29 berkas rahasia lagi. Berapa jumlah berkas seluruhnya?",
+                known: "Berkas di lemari = 62; berkas tambahan = 29.",
+                asked: "Berapa jumlah berkas rahasia seluruhnya?",
+                formula: "62 + 29",
+                result: 91,
+                choices: [
+                    { text: "81 berkas", isCorrect: false },
+                    { text: "91 berkas", isCorrect: true },
+                    { text: "95 berkas", isCorrect: false },
+                    { text: "101 berkas", isCorrect: false }
+                ],
+                rationale: "Untuk menyatukan seluruh berkas, kita menggunakan penjumlahan dasar: $62 + 29 = 91$ berkas."
+            },
+            {
+                operation: "Pengurangan",
+                question: "Brankas besi menyimpan 85 botol tinta tak terlihat. Ternyata sebanyak 38 botol bocor dan harus dibuang. Berapa sisa botol tinta yang masih bagus?",
+                known: "Botol awal = 85; botol rusak/bocor = 38.",
+                asked: "Berapa botol tinta yang masih dalam kondisi bagus?",
+                formula: "85 - 38",
+                result: 47,
+                choices: [
+                    { text: "43 botol", isCorrect: false },
+                    { text: "47 botol", isCorrect: true },
+                    { text: "53 botol", isCorrect: false },
+                    { text: "57 botol", isCorrect: false }
+                ],
+                rationale: "Mencari sisa botol tinta yang tidak bocor dilakukan dengan pengurangan: $85 - 38 = 47$ botol."
+            },
+            {
+                operation: "Perkalian",
+                question: "Di ruang pengawasan keamanan utama terdapat 7 baris monitor CCTV. Masing-masing baris memiliki 9 monitor aktif. Berapa jumlah monitor seluruhnya?",
+                known: "Baris monitor = 7; monitor tiap baris = 9.",
+                asked: "Berapakah jumlah seluruh monitor aktif?",
+                formula: "7 \\times 9",
+                result: 63,
+                choices: [
+                    { text: "54 monitor", isCorrect: false },
+                    { text: "56 monitor", isCorrect: false },
+                    { text: "63 monitor", isCorrect: true },
+                    { text: "72 monitor", isCorrect: false }
+                ],
+                rationale: "Karena ada 7 kelompok baris yang isinya masing-masing 9, kita gunakan perkalian: $7 \\times 9 = 63$ monitor."
+            },
+            {
+                operation: "Pembagian",
+                question: "Detektif Rian ingin membagikan 48 kompas saku kepada 6 tim penyelidik sama rata. Berapa kompas saku yang didapat oleh setiap tim?",
+                known: "Total kompas = 48; jumlah tim penyelidik = 6.",
+                asked: "Berapa banyak kompas yang didapatkan oleh masing-masing tim?",
+                formula: "48 \\div 6",
+                result: 8,
+                choices: [
+                    { text: "7 kompas", isCorrect: false },
+                    { text: "8 kompas", isCorrect: true },
+                    { text: "9 kompas", isCorrect: false },
+                    { text: "12 kompas", isCorrect: false }
+                ],
+                rationale: "Membagi kompas sama banyak dilakukan dengan operasi pembagian: $48 \\div 6 = 8$ kompas."
+            },
+            {
+                operation: "Penjumlahan",
+                question: "Untuk keperluan penyamaran, Agen Bayu membeli 57 kacamata hitam dan 38 kacamata cokelat. Berapa jumlah kacamata penyamaran Agen Bayu seluruhnya?",
+                known: "Kacamata hitam = 57; kacamata cokelat = 38.",
+                asked: "Berapa jumlah kacamata penyamaran seluruhnya?",
+                formula: "57 + 38",
+                result: 95,
+                choices: [
+                    { text: "85 kacamata", isCorrect: false },
+                    { text: "92 kacamata", isCorrect: false },
+                    { text: "95 kacamata", isCorrect: true },
+                    { text: "105 kacamata", isCorrect: false }
+                ],
+                rationale: "Menyatukan dua jenis kacamata penyamaran: $57 + 38 = 95$ kacamata."
+            },
+            {
+                operation: "Pengurangan",
+                question: "Laboratorium kimia forensik memiliki persediaan 91 tabung reaksi. Setelah pengujian selesai, sebanyak 45 tabung reaksi kotor dicuci. Berapa sisa tabung reaksi yang masih bersih?",
+                known: "Persediaan tabung = 91; tabung kotor yang dicuci = 45.",
+                asked: "Berapa tabung reaksi bersih yang tersisa?",
+                formula: "91 - 45",
+                result: 46,
+                choices: [
+                    { text: "44 tabung", isCorrect: false },
+                    { text: "46 tabung", isCorrect: true },
+                    { text: "56 tabung", isCorrect: false },
+                    { text: "51 tabung", isCorrect: false }
+                ],
+                rationale: "Menghitung sisa tabung bersih setelah dikurangi tabung kotor: $91 - 45 = 46$ tabung reaksi."
+            },
+            {
+                operation: "Perkalian",
+                question: "Detektif cilik mengumpulkan 8 kantong khusus berisi batu sidik jari. Setiap kantong berisi tepat 12 batu berharga. Berapa total batu sidik jari seluruhnya?",
+                known: "Kantong khusus = 8; isi batu per kantong = 12.",
+                asked: "Berapa total batu sidik jari seluruhnya?",
+                formula: "8 \\times 12",
+                result: 96,
+                choices: [
+                    { text: "86 batu", isCorrect: false },
+                    { text: "92 batu", isCorrect: false },
+                    { text: "96 batu", isCorrect: true },
+                    { text: "108 batu", isCorrect: false }
+                ],
+                rationale: "Menghitung berulang isi batu di seluruh kantong dengan perkalian: $8 \\times 12 = 96$ batu."
+            },
+            {
+                operation: "Pembagian",
+                question: "Markas detektif membagi rata 56 walkie-talkie baru kepada 8 mobil pengintai. Berapa banyak walkie-talkie yang ada di setiap mobil pengintai?",
+                known: "Total walkie-talkie = 56; jumlah mobil pengintai = 8.",
+                asked: "Berapa walkie-talkie yang ditaruh di tiap mobil?",
+                formula: "56 \\div 8",
+                result: 7,
+                choices: [
+                    { text: "6 walkie-talkie", isCorrect: false },
+                    { text: "7 walkie-talkie", isCorrect: true },
+                    { text: "8 walkie-talkie", isCorrect: false },
+                    { text: "9 walkie-talkie", isCorrect: false }
+                ],
+                rationale: "Membagi sama rata persediaan walkie-talkie ke seluruh mobil patroli: $56 \\div 8 = 7$ walkie-talkie."
+            },
+            {
+                operation: "Penjumlahan",
+                question: "Di perpustakaan kota, Agen Sarah mencatat ada 128 buku sejarah kuno dan 45 buku kode rahasia yang tersimpan di laci terkunci. Berapa jumlah buku yang dicatat seluruhnya?",
+                known: "Buku sejarah = 128; buku kode = 45.",
+                asked: "Berapa jumlah seluruh buku yang dicatat?",
+                formula: "128 + 45",
+                result: 173,
+                choices: [
+                    { text: "163 buku", isCorrect: false },
+                    { text: "173 buku", isCorrect: true },
+                    { text: "178 buku", isCorrect: false },
+                    { text: "183 buku", isCorrect: false }
+                ],
+                rationale: "Menjumlahkan koleksi buku sejarah kuno dan buku kode rahasia: $128 + 45 = 173$ buku."
+            },
+            {
+                operation: "Pengurangan",
+                question: "Helikopter pengintai membawa 70 liter bahan bakar khusus. Setelah mengitari kota selama satu jam, bahan bakar berkurang sebanyak 23 liter. Berapa sisa bahan bakar helikopter sekarang?",
+                known: "Bahan bakar awal = 70 liter; bahan bakar terpakai = 23 liter.",
+                asked: "Berapa liter sisa bahan bakar helikopter?",
+                formula: "70 - 23",
+                result: 47,
+                choices: [
+                    { text: "57 liter", isCorrect: false },
+                    { text: "43 liter", isCorrect: false },
+                    { text: "47 liter", isCorrect: true },
+                    { text: "37 liter", isCorrect: false }
+                ],
+                rationale: "Menghitung sisa bahan bakar dengan cara mengurangi pemakaian: $70 - 23 = 47$ liter."
+            },
+            {
+                operation: "Perkalian",
+                question: "Toko mainan rahasia memajang 9 baris robot intelijen di rak depan. Setiap baris berisi tepat 8 robot. Berapa total robot intelijen di toko tersebut?",
+                known: "Banyak baris = 9; isi robot tiap baris = 8.",
+                asked: "Berapa total robot intelijen yang dipajang?",
+                formula: "9 \\times 8",
+                result: 72,
+                choices: [
+                    { text: "64 robot", isCorrect: false },
+                    { text: "72 robot", isCorrect: true },
+                    { text: "80 robot", isCorrect: false },
+                    { text: "81 robot", isCorrect: false }
+                ],
+                rationale: "Menggunakan perkalian baris dikali kolom pajangan: $9 \\times 8 = 72$ robot."
+            },
+            {
+                operation: "Pembagian",
+                question: "Sebanyak 64 foto bukti kasus kriminal akan ditempelkan secara rata pada 8 papan tulis analisis. Berapa banyak foto bukti di setiap papan tulis?",
+                known: "Total foto bukti = 64; jumlah papan analisis = 8.",
+                asked: "Berapa foto bukti yang ada di setiap papan tulis?",
+                formula: "64 \\div 8",
+                result: 8,
+                choices: [
+                    { text: "7 foto", isCorrect: false },
+                    { text: "8 foto", isCorrect: true },
+                    { text: "9 foto", isCorrect: false },
+                    { text: "12 foto", isCorrect: false }
+                ],
+                rationale: "Membagi rata foto bukti ke atas papan analisis: $64 \\div 8 = 8$ foto."
+            },
+            {
+                operation: "Penjumlahan",
+                question: "Saat ekspedisi penyelamatan malam hari, tim mencatat ada 83 lampu suar di pantai barat dan 49 lampu suar di pantai timur. Berapa jumlah seluruh lampu suar yang terpasang?",
+                known: "Lampu suar barat = 83; lampu suar timur = 49.",
+                asked: "Berapa jumlah seluruh lampu suar yang terpasang?",
+                formula: "83 + 49",
+                result: 132,
+                choices: [
+                    { text: "132 lampu", isCorrect: true },
+                    { text: "122 lampu", isCorrect: false },
+                    { text: "135 lampu", isCorrect: false },
+                    { text: "142 lampu", isCorrect: false }
+                ],
+                rationale: "Menjumlahkan lampu suar dari kedua wilayah pantai: $83 + 49 = 132$ lampu."
+            },
+            {
+                operation: "Pengurangan",
+                question: "Markas besar pertahanan memiliki 95 rompi taktis tahan peluru. Sebanyak 37 rompi sedang dirawat di ruang servis. Berapa banyak rompi taktis yang siap pakai?",
+                known: "Persediaan rompi = 95; rompi diservis = 37.",
+                asked: "Berapa banyak rompi taktis yang siap dipakai?",
+                formula: "95 - 37",
+                result: 58,
+                choices: [
+                    { text: "68 rompi", isCorrect: false },
+                    { text: "58 rompi", isCorrect: true },
+                    { text: "62 rompi", isCorrect: false },
+                    { text: "48 rompi", isCorrect: false }
+                ],
+                rationale: "Mengurangi rompi yang sedang diservis dari persediaan awal: $95 - 37 = 58$ rompi."
+            },
+            {
+                operation: "Perkalian",
+                question: "Ada 12 meja kerja di ruang analisis data forensik digital. Di setiap meja diletakkan tepat 5 kaca pembesar laser. Berapa seluruh kaca pembesar di ruangan tersebut?",
+                known: "Meja kerja = 12; kaca pembesar per meja = 5.",
+                asked: "Berapa total kaca pembesar seluruhnya?",
+                formula: "12 \\times 5",
+                result: 60,
+                choices: [
+                    { text: "50 kaca", isCorrect: false },
+                    { text: "55 kaca", isCorrect: false },
+                    { text: "60 kaca", isCorrect: true },
+                    { text: "65 kaca", isCorrect: false }
+                ],
+                rationale: "Menghitung total kaca pembesar dengan perkalian: $12 \\times 5 = 60$ kaca pembesar."
+            },
+            {
+                operation: "Pembagian",
+                question: "Sebanyak 72 kartu sandi rahasia akan dibagikan sama rata kepada 9 agen lapangan. Berapa banyak kartu sandi yang diterima oleh setiap agen lapangan?",
+                known: "Total kartu sandi = 72; jumlah agen lapangan = 9.",
+                asked: "Berapa kartu sandi yang diperoleh setiap agen?",
+                formula: "72 \\div 9",
+                result: 8,
+                choices: [
+                    { text: "7 kartu", isCorrect: false },
+                    { text: "8 kartu", isCorrect: true },
+                    { text: "9 kartu", isCorrect: false },
+                    { text: "12 kartu", isCorrect: false }
+                ],
+                rationale: "Membagi rata total kartu sandi kepada seluruh agen: $72 \\div 9 = 8$ kartu."
+            },
+            {
+                operation: "Penjumlahan",
+                question: "Di dalam gua rahasia, agen mendata 76 keping koin perak kuno dan 57 keping koin emas kuno. Berapa total koin kuno seluruhnya yang ditemukan?",
+                known: "Koin perak = 76; koin emas = 57.",
+                asked: "Berapa total koin kuno seluruhnya?",
+                formula: "76 + 57",
+                result: 133,
+                choices: [
+                    { text: "123 koin", isCorrect: false },
+                    { text: "131 koin", isCorrect: false },
+                    { text: "133 koin", isCorrect: true },
+                    { text: "143 koin", isCorrect: false }
+                ],
+                rationale: "Menjumlahkan koin perak kuno dengan koin emas kuno: $76 + 57 = 133$ koin kuno."
+            },
+            {
+                operation: "Pengurangan",
+                question: "Toko peralatan detektif memiliki persediaan 82 senter ultraviolet. Dalam waktu satu minggu, sebanyak 29 senter terjual habis. Berapa sisa senter ultraviolet yang ada di toko?",
+                known: "Persediaan awal = 82; terjual = 29.",
+                asked: "Berapa sisa senter ultraviolet di toko?",
+                formula: "82 - 29",
+                result: 53,
+                choices: [
+                    { text: "53 senter", isCorrect: true },
+                    { text: "63 senter", isCorrect: false },
+                    { text: "51 senter", isCorrect: false },
+                    { text: "43 senter", isCorrect: false }
+                ],
+                rationale: "Mengurangi senter yang terjual dari jumlah persediaan: $82 - 29 = 53$ senter."
+            },
+            {
+                operation: "Perkalian",
+                question: "Untuk melatih fokus, para agen baru menyusun 11 baris kartu taktis. Setiap baris berisi tepat 6 kartu taktis. Berapa seluruh kartu taktis yang disusun?",
+                known: "Susunan baris = 11; kartu per baris = 6.",
+                asked: "Berapa seluruh kartu taktis yang berhasil disusun?",
+                formula: "11 \\times 6",
+                result: 66,
+                choices: [
+                    { text: "56 kartu", isCorrect: false },
+                    { text: "60 kartu", isCorrect: false },
+                    { text: "66 kartu", isCorrect: true },
+                    { text: "76 kartu", isCorrect: false }
+                ],
+                rationale: "Menghitung total susunan kartu taktis menggunakan perkalian: $11 \\times 6 = 66$ kartu."
+            },
+            {
+                operation: "Pembagian",
+                question: "Sebanyak 54 lencana kehormatan dibagikan sama banyak kepada 6 divisi kepolisian. Berapa banyak lencana yang didapat oleh setiap divisi kepolisian?",
+                known: "Total lencana = 54; jumlah divisi = 6.",
+                asked: "Berapa banyak lencana yang diperoleh setiap divisi?",
+                formula: "54 \\div 6",
+                result: 9,
+                choices: [
+                    { text: "8 lencana", isCorrect: false },
+                    { text: "9 lencana", isCorrect: true },
+                    { text: "7 lencana", isCorrect: false },
+                    { text: "12 lencana", isCorrect: false }
+                ],
+                rationale: "Membagi sama banyak total lencana kehormatan ke setiap divisi: $54 \\div 6 = 9$ lencana."
+            },
+
+            // ================= 10 SOAL CAMPURAN (SOAL 21 - 30) =================
+            {
+                operation: "Perkalian & Pengurangan",
+                question: "Agen membeli 4 pak baterai isi ulang untuk mikrofon pengintai. Setiap pak berisi 12 baterai. Setelah diperiksa, ternyata ada 7 baterai yang rusak. Berapa sisa baterai yang masih berfungsi baik?",
+                known: "Pak baterai = 4; isi per pak = 12 baterai; baterai rusak = 7.",
+                asked: "Berapa sisa baterai yang berfungsi baik?",
+                formula: "4 \\times 12 - 7",
+                result: 41,
+                choices: [
+                    { text: "35 baterai", isCorrect: false },
+                    { text: "41 baterai", isCorrect: true },
+                    { text: "45 baterai", isCorrect: false },
+                    { text: "48 baterai", isCorrect: false }
+                ],
+                rationale: "Hitung total baterai awal: $4 \\times 12 = 48$ baterai. Lalu kurangi baterai yang rusak: $48 - 7 = 41$ baterai."
+            },
+            {
+                operation: "Perkalian & Penjumlahan",
+                question: "Di laboratorium forensik terdapat 5 rak tabung kimia. Setiap rak berisi penuh 8 tabung. Hari ini, tim menerima kiriman tambahan 15 tabung kimia baru dari markas pusat. Berapa total tabung di laboratorium sekarang?",
+                known: "Rak tabung = 5; isi per rak = 8; tabung baru = 15.",
+                asked: "Berapa total tabung kimia sekarang?",
+                formula: "5 \\times 8 + 15",
+                result: 55,
+                choices: [
+                    { text: "45 tabung", isCorrect: false },
+                    { text: "55 tabung", isCorrect: true },
+                    { text: "60 tabung", isCorrect: false },
+                    { text: "65 tabung", isCorrect: false }
+                ],
+                rationale: "Hitung tabung di rak: $5 \\times 8 = 40$ tabung. Tambahkan dengan tabung baru: $40 + 15 = 55$ tabung."
+            },
+            {
+                operation: "Penjumlahan & Pengurangan",
+                question: "Detektif mengumpulkan 65 berkas foto bukti di laci pertama dan 25 berkas foto di laci kedua. Namun, sebanyak 18 berkas foto ternyata buram dan harus dimusnahkan. Berapa sisa berkas foto yang siap dianalisis?",
+                known: "Laci pertama = 65 berkas; laci kedua = 25 berkas; buram/dibuang = 18 berkas.",
+                asked: "Berapa sisa berkas foto yang siap dianalisis?",
+                formula: "65 + 25 - 18",
+                result: 72,
+                choices: [
+                    { text: "72 berkas", isCorrect: true },
+                    { text: "82 berkas", isCorrect: false },
+                    { text: "62 berkas", isCorrect: false },
+                    { text: "75 berkas", isCorrect: false }
+                ],
+                rationale: "Gabungkan berkas foto: $65 + 25 = 90$ berkas. Kurangi berkas buram: $90 - 18 = 72$ berkas."
+            },
+            {
+                operation: "Pembagian & Pengurangan",
+                question: "Seorang instruktur membagikan 60 permen energi sama rata ke dalam 6 kantong logistik. Jika Agen mengambil 4 permen dari salah satu kantong, berapa permen yang tersisa di dalam kantong tersebut?",
+                known: "Total permen = 60; kantong = 6; diambil = 4.",
+                asked: "Berapa sisa permen di dalam kantong tersebut?",
+                formula: "60 \\div 6 - 4",
+                result: 6,
+                choices: [
+                    { text: "5 permen", isCorrect: false },
+                    { text: "6 permen", isCorrect: true },
+                    { text: "8 permen", isCorrect: false },
+                    { text: "10 permen", isCorrect: false }
+                ],
+                rationale: "Bagi rata isi awal kantong: $60 \\div 6 = 10$ permen. Kurangi yang diambil Agen: $10 - 4 = 6$ permen."
+            },
+            {
+                operation: "Perkalian & Pengurangan",
+                question: "Ibu Agen membuat 6 kotak bekal makanan untuk perjalanan misi jauh. Setiap kotak diisi dengan 10 sushi gulung. Di perjalanan, para agen memakan 12 sushi. Berapa sisa sushi gulung sekarang?",
+                known: "Kotak bekal = 6; isi per kotak = 10 sushi; dimakan = 12 sushi.",
+                asked: "Berapa sisa sushi gulung sekarang?",
+                formula: "6 \\times 10 - 12",
+                result: 48,
+                choices: [
+                    { text: "38 sushi", isCorrect: false },
+                    { text: "48 sushi", isCorrect: true },
+                    { text: "50 sushi", isCorrect: false },
+                    { text: "60 sushi", isCorrect: false }
+                ],
+                rationale: "Hitung total sushi awal: $6 \\times 10 = 60$ sushi. Kurangi yang dimakan: $60 - 12 = 48$ sushi."
+            },
+            {
+                operation: "Penjumlahan & Pembagian",
+                question: "Rian mengumpulkan 28 peta lokasi lama dan kakaknya membawa 12 peta lokasi baru. Semua peta tersebut dimasukkan secara merata ke dalam 5 map kulit anti-air. Berapa peta di setiap map?",
+                known: "Peta Rian = 28; peta kakak = 12; map kulit = 5.",
+                asked: "Berapa banyak peta di setiap map?",
+                formula: "(28 + 12) \\div 5",
+                result: 8,
+                choices: [
+                    { text: "6 peta", isCorrect: false },
+                    { text: "8 peta", isCorrect: true },
+                    { text: "10 peta", isCorrect: false },
+                    { text: "12 peta", isCorrect: false }
+                ],
+                rationale: "Jumlahkan semua peta: $28 + 12 = 40$ peta. Bagi rata ke dalam map kulit: $40 \\div 5 = 8$ peta per map."
+            },
+            {
+                operation: "Perkalian & Penjumlahan",
+                question: "Kakek Agen memiliki 5 pohon jeruk di halaman markas rahasia. Setiap pohon menghasilkan 12 buah jeruk segar. Hari ini, ia juga mendapatkan tambahan kiriman 20 buah jeruk dari tetangga. Berapa total jeruk kakek sekarang?",
+                known: "Pohon jeruk = 5; isi per pohon = 12 jeruk; kiriman tambahan = 20 jeruk.",
+                asked: "Berapa jumlah jeruk kakek seluruhnya?",
+                formula: "5 \\times 12 + 20",
+                result: 80,
+                choices: [
+                    { text: "70 jeruk", isCorrect: false },
+                    { text: "80 jeruk", isCorrect: true },
+                    { text: "90 jeruk", isCorrect: false },
+                    { text: "100 jeruk", isCorrect: false }
+                ],
+                rationale: "Hitung jeruk hasil kebun sendiri: $5 \\times 12 = 60$ buah jeruk. Tambahkan kiriman tetangga: $60 + 20 = 80$ buah jeruk."
+            },
+            {
+                operation: "Pengurangan & Pembagian",
+                question: "Nenek membuat 70 kue kering untuk tim pengintai. Sebanyak 16 kue sudah dimakan hangat-hangat oleh keluarga. Sisanya dibagi sama rata ke dalam 6 wadah kedap udara. Berapa kue kering di setiap wadah?",
+                known: "Kue dibuat = 70; kue dimakan = 16; wadah = 6.",
+                asked: "Berapa banyak kue kering di setiap wadah kedap udara?",
+                formula: "(70 - 16) \\div 6",
+                result: 9,
+                choices: [
+                    { text: "8 kue", isCorrect: false },
+                    { text: "9 kue", isCorrect: true },
+                    { text: "10 kue", isCorrect: false },
+                    { text: "12 kue", isCorrect: false }
+                ],
+                rationale: "Kurangi kue yang dimakan dari total kue: $70 - 16 = 54$ kue. Bagi rata kue kering ke wadah: $54 \\div 6 = 9$ kue per wadah."
+            },
+            {
+                operation: "Perkalian & Pengurangan",
+                question: "Di ruang persenjataan terdapat 7 kotak penyimpan walkie-talkie. Setiap kotak berisi penuh 8 walkie-talkie. Sebanyak 15 walkie-talkie sedang dipinjam oleh tim patroli malam. Berapa walkie-talkie yang tersisa di dalam kotak?",
+                known: "Kotak = 7; isi per kotak = 8 walkie-talkie; dipinjam = 15.",
+                asked: "Berapa banyak walkie-talkie yang tersisa di dalam kotak?",
+                formula: "7 \\times 8 - 15",
+                result: 41,
+                choices: [
+                    { text: "41 walkie-talkie", isCorrect: true },
+                    { text: "56 walkie-talkie", isCorrect: false },
+                    { text: "35 walkie-talkie", isCorrect: false },
+                    { text: "45 walkie-talkie", isCorrect: false }
+                ],
+                rationale: "Hitung total awal walkie-talkie: $7 \\times 8 = 56$. Kurangi walkie-talkie yang sedang dipinjam patroli: $56 - 15 = 41$ walkie-talkie."
+            },
+            {
+                operation: "Perkalian & Penjumlahan",
+                question: "Paman membeli 5 tiket masuk wahana simulasi detektif dengan harga masing-masing Rp9.000. Ia juga membeli peta panduan taktis seharga Rp15.000. Berapakah total uang yang harus dibayar Paman?",
+                known: "Tiket wahana = 5; harga tiket satuan = Rp9.000; harga peta panduan = Rp15.000.",
+                asked: "Berapakah total uang yang dibayar oleh Paman?",
+                formula: "5 \\times 9000 + 15000",
+                result: 60000,
+                choices: [
+                    { text: "Rp55.000", isCorrect: false },
+                    { text: "Rp60.000", isCorrect: true },
+                    { text: "Rp45.000", isCorrect: false },
+                    { text: "Rp75.000", isCorrect: false }
+                ],
+                rationale: "Kalikan total harga tiket wahana: $5 \\times 9.000 = Rp45.000$. Tambahkan biaya peta panduan taktis: $45.000 + 15.000 = Rp60.000$."
+            }
+        ];
+
+        // Active State of Quiz Application
+        let ShuffledQuizData = [];
+        const QuizState = {
+            playerName: "Detektif Hebat",
+            avatarEmoji: "👦",
+            currentQuestionIdx: 0,
+            score: 0,
+            correctCount: 0,
+            answers: {}, // keeps track of { questionIdx: { chosenIdx, isCorrect } }
+            hintRevealed: false
+        };
+
+        function selectAvatar(emoji, btnElement) {
+            SoundFX.playClick();
+            QuizState.avatarEmoji = emoji;
+            document.getElementById('player-avatar').textContent = emoji;
+
+            // Highlight chosen avatar button
+            document.querySelectorAll('.avatar-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-300');
+                btn.classList.add('bg-white');
+            });
+            if (btnElement) {
+                btnElement.classList.remove('bg-white');
+                btnElement.classList.add('bg-amber-300');
+            }
+        }
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                // Melakukan penukaran nilai indeks secara aman
+                let temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            return arr;
+        }
+
+        function startQuiz() {
+            SoundFX.playClick();
+            const nameInput = document.getElementById('name-input').value.trim();
+            if (nameInput) {
+                QuizState.playerName = nameInput;
+                document.getElementById('player-display-name').textContent = nameInput;
+                document.getElementById('cert-player-name').textContent = nameInput;
+            }
+
+            // Memisahkan 20 soal pertama (tunggal) dan 10 soal terakhir (campuran)
+            const singleOps = QuizData.slice(0, 20);
+            const mixedOps = QuizData.slice(20, 30);
+
+            // Melakukan pengacakan terpisah di masing-masing kelompok, lalu digabungkan kembali
+            ShuffledQuizData = [
+                ...shuffleArray(singleOps),
+                ...shuffleArray(mixedOps)
+            ];
+
+            // Transition screens
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+
+            loadQuestion(0);
+        }
+
+        // Bind Question details to active display
+        function loadQuestion(idx) {
+            QuizState.currentQuestionIdx = idx;
+            QuizState.hintRevealed = false;
+            document.getElementById('hint-box').classList.add('hidden');
+            document.getElementById('explanation-section').classList.add('hidden');
+            document.getElementById('hint-toggle-btn').classList.remove('opacity-50');
+
+            const q = ShuffledQuizData[idx];
+
+            // Set progress indicators
+            document.getElementById('current-question-num').textContent = idx + 1;
+            document.getElementById('hud-slide-num').textContent = idx + 1;
+            const progressPct = ((idx + 1) / ShuffledQuizData.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
+
+            // SPOILER-PROOF: Reset header badge back to generic "Misi Rahasia" during answer phase
+            const opBadge = document.getElementById('operation-badge');
+            opBadge.textContent = "Misi Investigasi";
+            opBadge.className = "text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 bg-indigo-100 text-indigo-800 rounded border border-indigo-400";
+
+            // Bind textual data
+            document.getElementById('question-text').textContent = q.question;
+            document.getElementById('hint-known').textContent = q.known;
+            document.getElementById('hint-asked').textContent = q.asked;
+
+            // Manage Choice shuffling once per question
+            if (!q.shuffledChoices) {
+                q.shuffledChoices = shuffleArray(q.choices);
+            }
+
+            // Generate Choice buttons
+            const choicesGrid = document.getElementById('choices-grid');
+            choicesGrid.innerHTML = "";
+
+            q.shuffledChoices.forEach((choice, cIdx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-3 rounded-xl bg-white border-2 border-slate-900 font-extrabold text-[11px] sm:text-xs comic-shadow-sm comic-btn-active transition-all flex items-center justify-between gap-2 ${
+                    QuizState.answers[idx] !== undefined ? 'pointer-events-none' : ''
+                }`;
+                btn.onclick = () => selectAnswer(cIdx);
+                btn.innerHTML = `
+                    <span><span class="text-indigo-950 bg-indigo-50 border border-slate-300 w-5 h-5 rounded inline-flex items-center justify-center mr-1.5 font-black">${String.fromCharCode(65 + cIdx)}</span> ${choice.text}</span>
+                    <span class="icon-indicator text-base"></span>
+                `;
+
+                // If already answered, color code selection
+                if (QuizState.answers[idx] !== undefined) {
+                    if (choice.isCorrect) {
+                        btn.className = "w-full text-left p-3 rounded-xl bg-emerald-100 border-2 border-emerald-800 text-emerald-950 font-extrabold text-[11px] sm:text-xs flex items-center justify-between gap-2 pointer-events-none";
+                        btn.querySelector('.icon-indicator').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i>`;
+                    } else if (QuizState.answers[idx].chosenIdx === cIdx) {
+                        btn.className = "w-full text-left p-3 rounded-xl bg-rose-100 border-2 border-rose-800 text-rose-950 font-extrabold text-[11px] sm:text-xs flex items-center justify-between gap-2 pointer-events-none";
+                        btn.querySelector('.icon-indicator').innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600"></i>`;
+                    } else {
+                        btn.className = "w-full text-left p-3 rounded-xl bg-white border-2 border-slate-200 text-slate-400 font-extrabold text-[11px] sm:text-xs flex items-center justify-between gap-2 pointer-events-none opacity-40";
+                    }
+                }
+
+                choicesGrid.appendChild(btn);
+            });
+
+            // If already answered, show explanation right away
+            if (QuizState.answers[idx] !== undefined) {
+                showExplanation(idx);
+            }
+
+            // Adjust back button visibility
+            document.getElementById('btn-back').style.opacity = idx === 0 ? '0.3' : '1';
+        }
+
+        function toggleHint() {
+            if (QuizState.answers[QuizState.currentQuestionIdx] !== undefined) return;
+            SoundFX.playClick();
+            QuizState.hintRevealed = !QuizState.hintRevealed;
+            const hintBox = document.getElementById('hint-box');
+            if (QuizState.hintRevealed) {
+                hintBox.classList.remove('hidden');
+                document.getElementById('hint-toggle-btn').classList.add('opacity-50');
+            } else {
+                hintBox.classList.add('hidden');
+                document.getElementById('hint-toggle-btn').classList.remove('opacity-50');
+            }
+        }
+
+        function selectAnswer(chosenIdx) {
+            const idx = QuizState.currentQuestionIdx;
+            if (QuizState.answers[idx] !== undefined) return;
+
+            const q = ShuffledQuizData[idx];
+            const isCorrect = q.shuffledChoices[chosenIdx].isCorrect;
+
+            // Save state
+            QuizState.answers[idx] = { chosenIdx, isCorrect };
+
+            // Update stats
+            if (isCorrect) {
+                SoundFX.playSuccess();
+                QuizState.correctCount++;
+                QuizState.score += 100;
+                document.getElementById('correct-count').textContent = QuizState.correctCount;
+                document.getElementById('score-text').innerHTML = `<i class="fa-solid fa-star"></i> ${QuizState.score} XP`;
+            } else {
+                SoundFX.playWrong();
+            }
+
+            // Reload card to reveal details
+            loadQuestion(idx);
+        }
+
+        // Show analytical explanation card (reveals actual math operation name & KaTeX solution)
+        function showExplanation(idx) {
+            const q = ShuffledQuizData[idx];
+            const correctObj = QuizState.answers[idx];
+
+            const expSection = document.getElementById('explanation-section');
+            expSection.classList.remove('hidden');
+
+            // REVEAL OPERATION: Now reveal type of operation once submitted
+            const opBadge = document.getElementById('operation-badge');
+            opBadge.textContent = q.operation;
+            const opColors = {
+                "Penjumlahan": "bg-emerald-100 text-emerald-800 border-emerald-400",
+                "Pengurangan": "bg-rose-100 text-rose-800 border-rose-400",
+                "Perkalian": "bg-amber-100 text-amber-800 border-amber-400",
+                "Pembagian": "bg-sky-100 text-sky-800 border-sky-400",
+                "Perkalian & Pengurangan": "bg-purple-100 text-purple-800 border-purple-400",
+                "Perkalian & Penjumlahan": "bg-purple-100 text-purple-800 border-purple-400",
+                "Penjumlahan & Pengurangan": "bg-purple-100 text-purple-800 border-purple-400",
+                "Pembagian & Pengurangan": "bg-purple-100 text-purple-800 border-purple-400",
+                "Penjumlahan & Pembagian": "bg-purple-100 text-purple-800 border-purple-400",
+                "Pengurangan & Pembagian": "bg-purple-100 text-purple-800 border-purple-400"
+            };
+            opBadge.className = `text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded border-2 ${opColors[q.operation] || "bg-purple-100 text-purple-800 border-purple-400"}`;
+
+            const resultEmoji = document.getElementById('result-emoji');
+            const resultTitle = document.getElementById('result-title');
+
+            if (correctObj.isCorrect) {
+                resultEmoji.textContent = "🎯";
+                resultTitle.textContent = "Luar Biasa, Jawabanmu Akurat!";
+                expSection.className = "mt-4 bg-[#f0fdf4] border-2 border-emerald-800 rounded-xl p-3 space-y-2 comic-shadow-emerald";
+            } else {
+                resultEmoji.textContent = "🦹‍♂️";
+                resultTitle.textContent = "Oops! Mr. Kaos Berhasil Mengelabui Kita.";
+                expSection.className = "mt-4 bg-rose-50 border-2 border-rose-800 rounded-xl p-3 space-y-2 comic-shadow-rose";
+            }
+
+            document.getElementById('explain-known').textContent = q.known;
+            document.getElementById('explain-asked').textContent = q.asked;
+            document.getElementById('explain-rationale').textContent = q.rationale;
+
+            // Math formula rendering
+            const mathExp = document.getElementById('math-expression');
+            mathExp.textContent = `${q.formula} = ${q.result}`;
+
+            const mathWord = document.getElementById('math-word-explain');
+            mathWord.textContent = `(${q.operation})`;
+
+            // Apply KaTeX rendering smoothly
+            if (window.katex) {
+                katex.render(`${q.formula} = ${q.result}`, mathExp, { throwOnError: false });
+                
+                const rText = document.getElementById('explain-rationale');
+                rText.innerHTML = q.rationale.replace(/\$(.*?)\$/g, (match, formula) => {
+                    try {
+                        return katex.renderToString(formula);
+                    } catch (e) {
+                        return formula;
+                    }
+                });
+            }
+        }
+
+        function prevQuestion() {
+            if (QuizState.currentQuestionIdx > 0) {
+                loadQuestion(QuizState.currentQuestionIdx - 1);
+            }
+        }
+
+        function nextQuestion() {
+            SoundFX.playClick();
+            
+            // Check if current question has been answered
+            if (QuizState.answers[QuizState.currentQuestionIdx] === undefined) {
+                showNotification("Pilihlah salah satu jawaban terlebih dahulu!", "error");
+                return;
+            }
+
+            if (QuizState.currentQuestionIdx + 1 < ShuffledQuizData.length) {
+                loadQuestion(QuizState.currentQuestionIdx + 1);
+            } else {
+                triggerGraduation();
+            }
+        }
+
+        function triggerGraduation() {
+            SoundFX.playFanfare();
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('graduation-screen').classList.remove('hidden');
+
+            document.getElementById('final-correct').textContent = `${QuizState.correctCount} / 30`;
+            document.getElementById('final-score').textContent = `${QuizState.score} XP`;
+        }
+
+        function restartQuiz() {
+            SoundFX.playClick();
+            QuizState.currentQuestionIdx = 0;
+            QuizState.score = 0;
+            QuizState.correctCount = 0;
+            QuizState.answers = {};
+            QuizState.hintRevealed = false;
+
+            // Reset all shuffled choices references to re-shuffle everything on reset
+            QuizData.forEach(q => {
+                q.shuffledChoices = null;
+            });
+
+            document.getElementById('correct-count').textContent = "0";
+            document.getElementById('score-text').innerHTML = `<i class="fa-solid fa-star"></i> 0 XP`;
+
+            document.getElementById('graduation-screen').classList.add('hidden');
+            document.getElementById('setup-screen').classList.remove('hidden');
+        }
+
+        // Custom notification toaster helper
+        function showNotification(text, type = "info") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `p-3 rounded-lg border border-slate-900 flex items-center gap-2 text-xs font-black shadow-md transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto max-w-xs ${
+                type === 'success' ? 'bg-emerald-100 text-emerald-900' : 'bg-red-100 text-red-900'
+            }`;
+            
+            const icon = type === 'success' ? '🏆' : '🦹‍♂️';
+            toast.innerHTML = `<span>${icon}</span> <span>${text}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.remove('translate-y-4', 'opacity-0'), 50);
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+    </script>
+    <div id="toast-container" class="fixed bottom-4 right-4 z-[200] space-y-2 pointer-events-none"></div>
+</body>
+</html>
